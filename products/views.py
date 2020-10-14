@@ -1,17 +1,70 @@
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
+from .forms import ProductModelForm
 
 from products.models import Product
 
+# # This is the WRONG way of doing it
+# # Everyone can create objects in the databases
+# def bad_view(request, *args, **kwargs):
+#     # print(dict(request.GET))
+#     my_request_data = dict(request.GET)
+#     new_product = my_request_data.get("new_product")
+#     print(my_request_data, new_product)
+#     if new_product[0].lower() == "true":
+#         print("new product")        
+#     return HttpResponse("Dont do this")
+
 
 # Create your views here.
-def home_view(request, *args, **kwargs):
+def search_view(request, *args, **kwargs):
     # return HttpResponse("<h1>Hello World</h1>")
-    context = {"name": "Anders"}
+    # context = {"name": "Anders"}    
+
+    query = request.GET.get('q') # q is refered as query
+    qs = Product.objects.filter(title__icontains=query[0])
+    print(query, qs) # qs is query set
+    context = {"name": "abc", "query": query}
     return render(request, "home.html", context)
 
 
-# Two different approaches "regular" and Json
+# def product_create_view(request, *args, **kwargs):
+#     # print(request.POST)
+#     # print(request.GET)
+#     if request.method == "POST":
+#         post_data = request.POST or None
+#         if post_data != None:
+#             my_form = ProductForm(request.POST)
+            
+#             # Data is being validated by a Django Form
+#             if my_form.is_valid():
+#                 print(my_form.cleaned_data.get("title"))
+#                 title_from_input = my_form.cleaned_data.get("title")
+#                 Product.objects.create(title=title_from_input)
+#                 # print("post_data", post_data)
+
+#     return render(request, "forms.html", {})
+
+def product_create_view(request, *args, **kwargs):
+    form = ProductModelForm(request.POST or None)
+    if form.is_valid():
+
+        obj = form.save(commit=False)
+        # do some stuff
+        # obj.user = request.user
+        obj.save()
+
+        # print(form.cleaned_data) # Cleaned data is Validated data
+        # data = form.cleaned_data
+        # Product.objects.create(**data)        
+        
+        form = ProductModelForm()
+
+        # Redirect options
+        # return HttpResponceRedirect("/succes")
+        # return redirect("/succes")
+    return render(request, "forms.html", {"form": form})
+
 def product_detail_view(request, pk):
     try:
         obj = Product.objects.get(pk=pk)
