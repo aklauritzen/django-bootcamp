@@ -53,6 +53,7 @@ class LoginForm(forms.Form):
 
         return username
         
+        
     def clean_email(self):
         email = self.cleaned_data.get('email')
         qs = User.objects.filter(username__iexact=email)
