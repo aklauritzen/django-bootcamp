@@ -1,2 +1,2 @@
-# django_bootcamp
+# Django Bootcamp
 Learning Django with CodingEntrepreneurs
