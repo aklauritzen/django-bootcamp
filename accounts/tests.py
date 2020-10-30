@@ -12,12 +12,12 @@ class UserTestCase(TestCase):
         # Creates a new user
         user_a = User(username="cfe", email='cfe@invalid.com')
 
-        # The following lines of code is essential the same as
+        # The following line of code is essential the same as
         # User.objects.create() or User.objects.create_user()
 
         user_a_pw = 'some_123_password'
         
-        # self. to make it awailable in the whole class. ex. in test_user_password()
+        # self. to make it available in the whole class. ex. in test_user_password()
         self.user_a_pw = user_a_pw
         user_a.is_staff = True
         user_a.is_superuser = True        
@@ -25,8 +25,7 @@ class UserTestCase(TestCase):
         user_a.save()
 
         self.user_a = user_a
-        
-        
+                
 
     # Test to see if user exists
     def test_user_exists(self):
@@ -55,6 +54,7 @@ class UserTestCase(TestCase):
         self.assertTrue(
             user_a.check_password(self.user_a_pw)
         )
+
 
     def test_login_url(self):
         # login_url = "/login/"
