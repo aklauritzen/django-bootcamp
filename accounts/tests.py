@@ -71,8 +71,8 @@ class UserTestCase(TestCase):
         status_code = response.status_code
         redirect_path = response.request.get("PATH_INFO")
 
-        print(f"Redirect_path: {redirect_path}")
-        print(f"settings.LOGIN_REDIRECT_URL: {settings.LOGIN_REDIRECT_URL}")
+        # print(f"Redirect_path: {redirect_path}")
+        # print(f"settings.LOGIN_REDIRECT_URL: {settings.LOGIN_REDIRECT_URL}")
 
         self.assertEqual(redirect_path, settings.LOGIN_REDIRECT_URL)
         self.assertEqual(status_code, 200)
