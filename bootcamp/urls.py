@@ -16,10 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path # url
 
+
 from accounts.views import (
     login_view,
     logout_view,
     register_view
+)
+
+from orders.views import (
+       order_checkout_view
 )
 
 from products.views import (    
@@ -27,13 +32,14 @@ from products.views import (
     product_create_view,
     product_detail_view,
     product_list_view,
-    product_api_detail_view
+    product_api_detail_view 
 )
 
 from django.views.generic import TemplateView
 
 urlpatterns = [    
     path('', TemplateView.as_view(template_name="base.html")),
+    path('checkout/', order_checkout_view),
     path('login/', login_view),
     path('logout/', logout_view),
     path('register/', register_view),
