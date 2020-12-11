@@ -19,7 +19,7 @@ from products.models import Product
 
 
 # Create your views here.
-def search_view(request, *args, **kwargs):
+def search_view(request):
     # return HttpResponse("<h1>Hello World</h1>")
     # context = {"name": "Anders"}    
 
@@ -50,7 +50,7 @@ def search_view(request, *args, **kwargs):
 # from django.contrib.auth.decorators import login_required
 # @login_required
 @staff_member_required
-def product_create_view(request, *args, **kwargs):
+def product_create_view(request):
     form = ProductModelForm(request.POST or None)
     if form.is_valid():
 

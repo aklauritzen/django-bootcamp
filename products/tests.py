@@ -8,6 +8,7 @@ from django.test import TestCase
 User = get_user_model()
 
 class ProductTestCase(TestCase):
+ 
 
 # Creates a new test database
     def setUp(self):
@@ -28,7 +29,6 @@ class ProductTestCase(TestCase):
         user_a.set_password(user_a_pw)
         user_a.save()
         
-
         # Create a second user
         user_b = User.objects.create_user("user_2", "user_2@invalid.com", "password")
         self.user_b = user_b
@@ -54,4 +54,3 @@ class ProductTestCase(TestCase):
         response = self.client.post("/products/create/", 
         {"title": "This is an valid test"})
         self.assertEqual(response.status_code, 200)
-

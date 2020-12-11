@@ -17,16 +17,18 @@ def order_checkout_view(request):
     order_id = request.session.get("order_id")
     order_obj = None
 
+    new_creation = False
+
     try:
         order_obj = Order.objects.get(id=order_id)
     except:
         order_id = None
 
     if order_id == None:
-        order_obj = Order.objects.create (product=product, user=user)
-        request.session['order_id'] = order_obj.id
-
-    print(order_obj.id)
-
+        new_creation = True
+        order_obj = Order.objects.create(product=product, user=user)
+    if order_obj != None and new_creation == False:
+        if order_obj.product.id != product.id:
+            order_obj = Order.objects.create(product=product, user=user)
+    request.session['order_id'] = order_obj.id
     return render(request, 'forms.html', {})
-
